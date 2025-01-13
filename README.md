@@ -46,6 +46,9 @@ pip install -r requirements.txt
 # On Linux/Mac:
 export OPENAI_API_KEY='your-api-key-here'
 
+# Or add the following line to your shell profile (e.g. .bashrc, .zshrc):
+export OPENAI_API_KEY='your-api-key-here'
+
 # On Windows:
 set OPENAI_API_KEY=your-api-key-here
 ```
