@@ -55,6 +55,15 @@ export OPENAI_API_KEY='your-api-key-here'
 set OPENAI_API_KEY=your-api-key-here
 ```
 
+5. (Optional) Set up a bash alias for easier access:
+```bash
+# Add to your shell profile (e.g. .bashrc, .zshrc):
+alias gcommit='python /path/to/repository/src/main.py'
+
+# Then source your profile or restart your terminal
+source ~/.bashrc  # or source ~/.zshrc
+```
+
 ## 🎯 Usage
 
 1. Make your changes to the repository files
