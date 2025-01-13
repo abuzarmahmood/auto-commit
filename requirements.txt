@@ -1,2 +1,2 @@
-autogen>=1.0.0
+pyautogen
 gitpython>=3.1.0
