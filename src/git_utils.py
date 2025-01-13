@@ -24,3 +24,9 @@ def create_commit(message: str) -> None:
     """Create a commit with the given message"""
     repo = get_repo()
     repo.index.commit(message)
+
+def push_changes() -> None:
+    """Push commits to remote repository"""
+    repo = get_repo()
+    origin = repo.remote()
+    origin.push()

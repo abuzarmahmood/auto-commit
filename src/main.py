@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from commit_agent import analyze_changes
-from git_utils import stage_files, create_commit
+from git_utils import stage_files, create_commit, push_changes
 
 def main():
     """Main entry point for the commit assistant"""
@@ -30,6 +30,13 @@ def main():
         stage_files(files)
         create_commit(message)
         print("Commit created successfully!")
+
+        # Ask about pushing
+        push_response = input("\nPush changes to remote? [y/N] ").lower()
+        if push_response == 'y':
+            push_changes()
+            print("Changes pushed successfully!")
+        
         return 0
         
     except Exception as e:
