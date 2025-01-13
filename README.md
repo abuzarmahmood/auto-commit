@@ -10,6 +10,8 @@ A smart utility that makes creating Git commits easier by automatically analyzin
 - 💡 Generates contextual commit messages based on the changes
 - ✅ Interactive confirmation before creating commits
 - 🔄 Handles staging files and commit creation
+- 🚀 Optional auto-confirmation and auto-pushing
+- $$ Outputs cost of the API call for transparency
 
 ## 🚀 Quick Start
 
