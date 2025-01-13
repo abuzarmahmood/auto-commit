@@ -43,7 +43,7 @@ user_proxy = autogen.UserProxyAgent(
 )
 
 
-def analyze_changes() -> Tuple[List[str], str]:
+def analyze_changes() -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
     Returns:
@@ -52,7 +52,7 @@ def analyze_changes() -> Tuple[List[str], str]:
     diff_output = get_diff()
 
     # Initialize the conversation
-    user_proxy.initiate_chat(
+    chat_result = user_proxy.initiate_chat(
         assistant,
         message=f"""Please analyze this git diff and suggest:
         1. Which files should be included in the commit
@@ -101,4 +101,6 @@ def analyze_changes() -> Tuple[List[str], str]:
     # Print detected message
     print(f"Detected message: {message}")
 
-    return files, message
+    # Get cost from the last conversation
+    cost = chat_result.cost['usage_including_cached_inference']
+    return files, message, cost
