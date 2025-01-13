@@ -43,10 +43,12 @@ def get_current_branch() -> str:
     repo = get_repo()
     return repo.active_branch.name
 
+
 def push_changes() -> None:
     """Push commits to remote repository"""
     repo = get_repo()
     origin = repo.remote()
     current_branch = get_current_branch()
     print(f"Pushing changes to {origin.url} on branch {current_branch}")
-    origin.push(refspec=f'refs/heads/{current_branch}:refs/heads/{current_branch}')
+    origin.push(
+        refspec=f'refs/heads/{current_branch}:refs/heads/{current_branch}')
