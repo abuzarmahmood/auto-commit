@@ -25,8 +25,8 @@ A smart utility that makes creating Git commits easier by automatically analyzin
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/abuzarmahmood/auto-commit.git
+cd auto-commit
 ```
 
 2. Create and activate a virtual environment:
