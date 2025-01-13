@@ -100,7 +100,12 @@ def analyze_changes() -> Tuple[List[str], str, float]:
     print(f"Detected files: {files}")
 
     # Extract message
-    message = message_section.split("\n")[0].strip()
+    # message = message_section.split("\n")[0].strip()
+    message = message_section
+    # Remove any lines with "TERMINATE"
+    message = "\n".join(
+        [line for line in message.split("\n") if "TERMINATE" not in line])
+
     # Print detected message
     print(f"Detected message: {message}")
 
