@@ -1,3 +1,5 @@
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/abuzarmahmood/auto-commit/main.svg)](https://results.pre-commit.ci/latest/github/abuzarmahmood/auto-commit/main)
+
 # Auto-Commit 🤖
 
 A smart utility that makes creating Git commits easier by automatically analyzing your changes and suggesting meaningful commit messages. Powered by OpenAI's GPT models through the AutoGen framework.
