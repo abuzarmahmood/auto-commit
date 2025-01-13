@@ -29,7 +29,14 @@ source venv/bin/activate  # On Linux/Mac
 pip install -r requirements.txt
 ```
 
-5. You're ready to use the tool! Remember to activate the virtual environment whenever you want to use it.
+5. Set up your OpenAI API key as an environment variable:
+```bash
+export OPENAI_API_KEY='your-api-key-here'  # On Linux/Mac
+# OR
+set OPENAI_API_KEY=your-api-key-here  # On Windows
+```
+
+6. You're ready to use the tool! Remember to activate the virtual environment whenever you want to use it.
 
 To deactivate the virtual environment when you're done:
 ```bash
