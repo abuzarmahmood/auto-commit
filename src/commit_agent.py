@@ -1,12 +1,16 @@
+import os
 import autogen
 from typing import List, Tuple
-from .git_utils import get_diff
+from git_utils import get_diff
+
+# Get API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Configure the agent
 config_list = [
     {
-        "model": "gpt-4",
-        "api_key": "your-api-key-here"  # Should be configured via environment variable
+        "model": "gpt-4o",
+        "api_key": api_key# Should be configured via environment variable
     }
 ]
 
@@ -25,7 +29,7 @@ assistant = autogen.AssistantAgent(
 user_proxy = autogen.UserProxyAgent(
     name="user_proxy",
     human_input_mode="NEVER",
-    max_consecutive_auto_reply=1,
+    max_consecutive_auto_reply=0,
     is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
 )
 
@@ -62,6 +66,8 @@ def analyze_changes() -> Tuple[List[str], str]:
     last_message = assistant.last_message()
     if not last_message:
         return [], "No changes to commit"
+
+    print(f"Last message: {last_message}")
         
     content = last_message.get("content", "")
     
@@ -76,8 +82,12 @@ def analyze_changes() -> Tuple[List[str], str]:
     
     # Extract files
     files = [f.strip("- ").strip() for f in files_section.split("\n") if f.strip()]
+    # Print detected files
+    print(f"Detected files: {files}")
     
     # Extract message
     message = message_section.split("\n")[0].strip()
+    # Print detected message
+    print(f"Detected message: {message}")
     
     return files, message
