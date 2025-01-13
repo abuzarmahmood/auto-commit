@@ -17,7 +17,7 @@ def get_repo() -> Repo:
         git.exc.NoSuchPathError: If the path doesn't exist
     """
     try:
-        return Repo(".")
+        return Repo(".", search_parent_directories=True)
     except Exception as e:
         raise type(e)(f"Failed to open git repository in current directory: {str(e)}")
 
