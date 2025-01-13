@@ -1,4 +1,4 @@
-# Commit Assistant 🤖
+# Auto-Commit 🤖
 
 A smart utility that makes creating Git commits easier by automatically analyzing your changes and suggesting meaningful commit messages. Powered by OpenAI's GPT models through the AutoGen framework.
 
