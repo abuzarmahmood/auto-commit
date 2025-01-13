@@ -58,10 +58,27 @@ set OPENAI_API_KEY=your-api-key-here
 1. Make your changes to the repository files
 2. Run the commit assistant:
 ```bash
-python src/main.py
+python src/main.py [options]
 ```
 3. Review the suggested files and commit message
 4. Confirm to create the commit
+
+### Command Line Options
+
+- `-y, --yes`: Automatically confirm commit without prompting
+- `-p, --push`: Automatically push changes after commit
+
+Examples:
+```bash
+# Interactive mode (default)
+python src/main.py
+
+# Auto-commit without prompts
+python src/main.py -y
+
+# Auto-commit and push
+python src/main.py -y -p
+```
 
 ## 💡 Tips
 
