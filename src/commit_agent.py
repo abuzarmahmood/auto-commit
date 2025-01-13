@@ -22,10 +22,13 @@ config_list = [
     }
 ]
 
-# Create assistant agent
+# Create assistant agent without Docker
 assistant = autogen.AssistantAgent(
     name="git_assistant",
-    llm_config={"config_list": config_list},
+    llm_config={
+        "config_list": config_list,
+        "use_docker": False
+    },
     system_message="""You are a helpful assistant that analyzes git diffs and suggests:
     1. Which files should be included in the commit
     2. An appropriate commit message following conventional commit format
