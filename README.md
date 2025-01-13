@@ -55,16 +55,13 @@ export OPENAI_API_KEY='your-api-key-here'
 set OPENAI_API_KEY=your-api-key-here
 ```
 
-5. (Optional) Set up a bash alias for easier access:
+5. Set up the bash function for easier access:
 ```bash
-# Add to your shell profile (e.g. .bashrc, .zshrc):
-alias autocommit='python /path/to/repository/src/main.py'
+# Source the bash function file:
+source src/autocommit.sh
 
-# Then source your profile or restart your terminal
-source ~/.bashrc  # or source ~/.zshrc
-
-# Or run the following command to add the alias to your profile and source it:
-echo "alias autocommit='python $(pwd)/src/main.py'" >> ~/.bashrc && source ~/.bashrc.bashrc
+# Add this line to your shell profile (e.g. .bashrc, .zshrc) to make it permanent:
+source /path/to/repository/src/autocommit.sh
 ```
 
 ## 🎯 Usage
