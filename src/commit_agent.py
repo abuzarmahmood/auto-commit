@@ -102,5 +102,5 @@ def analyze_changes() -> Tuple[List[str], str, float]:
     print(f"Detected message: {message}")
 
     # Get cost from the last conversation
-    cost = chat_result.cost['usage_including_cached_inference']
+    cost = chat_result.cost['usage_including_cached_inference']['total_cost']
     return files, message, cost
