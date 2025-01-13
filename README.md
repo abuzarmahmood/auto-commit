@@ -1,44 +1,78 @@
-Utility to make creating commits easier.
-Uses an autogen agent to create a commit message based on the changes made to the repository.
+# Commit Assistant 🤖
 
-Contains tools to:
- - Find the changes made to the repository (git diff)
- - Create a commit message based on the changes made
- - Create a commit with the message
+A smart utility that makes creating Git commits easier by automatically analyzing your changes and suggesting meaningful commit messages. Powered by OpenAI's GPT models through the AutoGen framework.
 
-## Installation
+## ✨ Features
 
-1. Make sure you have Python 3.6+ and pip installed on your system.
+- 📝 Automatically analyzes repository changes using `git diff`
+- 💡 Generates contextual commit messages based on the changes
+- ✅ Interactive confirmation before creating commits
+- 🔄 Handles staging files and commit creation
 
-2. Clone the repository:
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.6 or higher
+- Git
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository:
 ```bash
 git clone <repository-url>
 cd <repository-name>
 ```
 
-3. Create and activate a virtual environment:
+2. Create and activate a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Linux/Mac
-# OR
-.\venv\Scripts\activate  # On Windows
+
+# On Linux/Mac:
+source venv/bin/activate
+
+# On Windows:
+.\venv\Scripts\activate
 ```
 
-4. Install dependencies:
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-5. Set up your OpenAI API key as an environment variable:
+4. Set up your OpenAI API key:
 ```bash
-export OPENAI_API_KEY='your-api-key-here'  # On Linux/Mac
-# OR
-set OPENAI_API_KEY=your-api-key-here  # On Windows
+# On Linux/Mac:
+export OPENAI_API_KEY='your-api-key-here'
+
+# On Windows:
+set OPENAI_API_KEY=your-api-key-here
 ```
 
-6. You're ready to use the tool! Remember to activate the virtual environment whenever you want to use it.
+## 🎯 Usage
 
-To deactivate the virtual environment when you're done:
+1. Make your changes to the repository files
+2. Run the commit assistant:
 ```bash
-deactivate
+python src/main.py
 ```
+3. Review the suggested files and commit message
+4. Confirm to create the commit
+
+## 💡 Tips
+
+- The tool works best when changes are focused and related
+- You can always review and modify the suggested commit message
+- Make sure your OpenAI API key is properly set before running
+
+## 🛠️ Development
+
+Want to contribute? Great! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Submit a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
