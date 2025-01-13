@@ -43,7 +43,7 @@ user_proxy = autogen.UserProxyAgent(
 )
 
 
-def analyze_changes() -> Tuple[List[str], str]:
+def analyze_changes() -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
     Returns:
@@ -101,4 +101,6 @@ def analyze_changes() -> Tuple[List[str], str]:
     # Print detected message
     print(f"Detected message: {message}")
 
-    return files, message
+    # Get cost from the last conversation
+    cost = assistant.last_conversation_cost
+    return files, message, cost

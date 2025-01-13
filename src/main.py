@@ -24,7 +24,7 @@ def main():
 
     try:
         # Get suggestions from the agent
-        files, message = analyze_changes()
+        files, message, cost = analyze_changes()
 
         if not files:
             print("No files to commit")
@@ -59,6 +59,8 @@ def main():
                 push_changes()
                 print("Changes pushed successfully!")
 
+        # Print operation cost
+        print(f"\nOperation cost: ${cost:.4f}")
         return 0
 
     except Exception as e:
