@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
-from .commit_agent import analyze_changes
-from .git_utils import stage_files, create_commit
+from commit_agent import analyze_changes
+from git_utils import stage_files, create_commit
 
 def main():
     """Main entry point for the commit assistant"""
