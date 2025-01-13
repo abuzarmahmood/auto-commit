@@ -1,5 +1,5 @@
 import autogen
-from typing import List
+from typing import List, Tuple
 from .git_utils import get_diff
 
 # Configure the agent
