@@ -19,7 +19,8 @@ def get_repo() -> Repo:
     try:
         return Repo(".", search_parent_directories=True)
     except Exception as e:
-        raise type(e)(f"Failed to open git repository in current directory: {str(e)}")
+        raise type(e)(
+            f"Failed to open git repository in current directory: {str(e)}")
 
 
 def get_staged_files() -> List[str]:
