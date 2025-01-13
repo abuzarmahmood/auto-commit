@@ -27,7 +27,6 @@ assistant = autogen.AssistantAgent(
     name="git_assistant",
     llm_config={
         "config_list": config_list,
-        "use_docker": False
     },
     system_message="""You are a helpful assistant that analyzes git diffs and suggests:
     1. Which files should be included in the commit
@@ -43,6 +42,7 @@ user_proxy = autogen.UserProxyAgent(
     max_consecutive_auto_reply=0,
     is_termination_msg=lambda x: x.get(
         "content", "").rstrip().endswith("TERMINATE"),
+    code_execution_config=False,
 )
 
 
