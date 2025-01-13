@@ -48,4 +48,5 @@ def push_changes() -> None:
     repo = get_repo()
     origin = repo.remote()
     current_branch = get_current_branch()
+    print(f"Pushing changes to {origin.url} on branch {current_branch}")
     origin.push(refspec=f'refs/heads/{current_branch}:refs/heads/{current_branch}')
