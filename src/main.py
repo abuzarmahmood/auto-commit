@@ -8,6 +8,7 @@ confirmation and push operations through command line flags.
 """
 
 import sys
+import os
 import argparse
 from commit_agent import analyze_changes
 from git_utils import stage_files, create_commit, push_changes
@@ -16,6 +17,9 @@ from git_utils import stage_files, create_commit, push_changes
 def main():
     """Main entry point for the commit assistant"""
     parser = argparse.ArgumentParser(description='Smart Git commit assistant')
+    parser.add_argument('-d', '--directory', 
+                      help='Path to git repository (defaults to current directory)',
+                      default='.')
     parser.add_argument('-y', '--yes', action='store_true',
                         help='Automatically confirm commit without prompting')
     parser.add_argument('-p', '--push', action='store_true',
@@ -23,6 +27,10 @@ def main():
     args = parser.parse_args()
 
     try:
+        # Change to specified directory
+        original_dir = os.getcwd()
+        os.chdir(args.directory)
+
         # Get suggestions from the agent
         files, message, cost = analyze_changes()
 
@@ -66,6 +74,10 @@ def main():
     except Exception as e:
         print(f"Error: {str(e)}", file=sys.stderr)
         return 1
+    finally:
+        # Always return to original directory
+        if 'original_dir' in locals():
+            os.chdir(original_dir)
 
 
 if __name__ == "__main__":

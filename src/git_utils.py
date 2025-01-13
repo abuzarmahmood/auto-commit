@@ -10,8 +10,16 @@ from typing import List, Tuple
 
 
 def get_repo() -> Repo:
-    """Get git repository object for current directory"""
-    return Repo(".")
+    """
+    Get git repository object for current directory
+    Raises:
+        git.exc.InvalidGitRepositoryError: If not in a git repository
+        git.exc.NoSuchPathError: If the path doesn't exist
+    """
+    try:
+        return Repo(".")
+    except Exception as e:
+        raise type(e)(f"Failed to open git repository in current directory: {str(e)}")
 
 
 def get_staged_files() -> List[str]:
