@@ -1,3 +1,10 @@
+"""
+Git utility functions for interacting with repositories.
+
+This module provides a collection of helper functions for common Git operations
+like getting repository information, staging files, creating commits, and pushing changes.
+"""
+
 from git import Repo
 from typing import List, Tuple
 

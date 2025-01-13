@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+"""
+Smart Git commit assistant CLI tool.
+
+This script provides a command-line interface for automatically analyzing Git changes,
+generating commit messages, and managing the commit process. It supports automatic
+confirmation and push operations through command line flags.
+"""
+
 import sys
 import argparse
 from commit_agent import analyze_changes

@@ -1,3 +1,11 @@
+"""
+AI-powered Git commit analysis module.
+
+This module uses OpenAI's GPT model through the autogen library to analyze Git diffs,
+suggest files for commit, and generate appropriate conventional commit messages.
+It handles the interaction with the AI model and parsing of its responses.
+"""
+
 import os
 import autogen
 from typing import List, Tuple
