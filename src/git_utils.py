@@ -60,7 +60,7 @@ def push_changes() -> None:
     current_branch = get_current_branch()
     print(f"""
 Pushing changes to:
-Origin: [[ {origin.url} ]] 
+Origin: [[ {origin.url} ]]
 Branch: [[ {current_branch} ]]
           """)
     origin.push(
