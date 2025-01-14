@@ -26,7 +26,7 @@ def get_repo() -> Repo:
 def get_staged_files() -> List[str]:
     """Get list of files staged for commit"""
     repo = get_repo()
-    return [item.a_path for item in repo.index.diff("HEAD")]
+    return [item.a_path for item in repo.index.diff("HEAD")] + [item.a_path for item in repo.index.diff(None)]
 
 
 def get_diff() -> str:
