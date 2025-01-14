@@ -60,6 +60,7 @@ def analyze_changes() -> Tuple[List[str], str, float]:
         message=f"""Please analyze this git diff and suggest:
         1. Which files should be included in the commit
         2. A clear commit message following conventional commit format
+        3. For larger commits, include details about the changes made as bullet points
 
         Git diff:
         {diff_output}
@@ -71,6 +72,8 @@ def analyze_changes() -> Tuple[List[str], str, float]:
 
         MESSAGE:
         type(scope): description
+
+        Additional details as bullet points (if needed)
 
         TERMINATE"""
     )
