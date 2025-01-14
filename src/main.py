@@ -11,7 +11,7 @@ import sys
 import os
 import argparse
 from commit_agent import analyze_changes
-from git_utils import stage_files, create_commit, push_changes
+from git_utils import stage_files, create_commit, push_changes, get_staged_files
 
 
 def main():
@@ -30,6 +30,12 @@ def main():
         # Change to specified directory
         original_dir = os.getcwd()
         os.chdir(args.directory)
+
+        # Check for staged changes
+        staged_files = get_staged_files()
+        if not staged_files:
+            print("No changes staged for commit (use 'git add' first)")
+            return 1
 
         # Get suggestions from the agent
         files, message, cost = analyze_changes()
