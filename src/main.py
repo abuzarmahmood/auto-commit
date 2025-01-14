@@ -6,12 +6,16 @@ This script provides a command-line interface for automatically analyzing Git ch
 generating commit messages, and managing the commit process. It supports automatic
 confirmation and push operations through command line flags.
 """
+import warnings
+
+# Suppress warnings
+warnings.filterwarnings("ignore")
 
 import sys
 import os
 import argparse
 from commit_agent import analyze_changes
-from git_utils import stage_files, create_commit, push_changes, get_staged_files
+from git_utils import stage_files, create_commit, push_changes, get_staged_files, get_diff
 
 
 def main():
@@ -30,6 +34,11 @@ def main():
         # Change to specified directory
         original_dir = os.getcwd()
         os.chdir(args.directory)
+
+        diff_output = get_diff()
+        if not diff_output:
+            print("No staged changes to commit (use 'git add' first)")
+            return 1
 
         # Check for staged changes
         staged_files = get_staged_files()
