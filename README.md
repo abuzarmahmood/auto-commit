@@ -93,6 +93,38 @@ python src/main.py -y
 python src/main.py -y -p
 ```
 
+## 🎬 Example Workflow
+
+Here's a typical workflow using auto-commit:
+
+```bash
+# Make some changes to your code
+echo "print('hello world')" > hello.py
+
+# Stage your changes
+git add hello.py
+
+# Run auto-commit
+python src/main.py
+
+# You'll see output like this:
+Suggested files to commit:
+- hello.py
+
+Suggested commit message:
+feat: Add hello world script
+
+Add a simple Python script that prints "hello world"
+
+Proceed with commit? [y/N] y
+Commit created successfully!
+
+Push changes to remote? [y/N] y
+Changes pushed successfully!
+
+Operation cost: $0.0023
+```
+
 ## 💡 Tips
 
 - The tool works best when changes are focused and related
