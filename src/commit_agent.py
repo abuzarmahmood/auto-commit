@@ -94,8 +94,19 @@ def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[
     refined_message = "\n".join(
         [line for line in content.split("\n") if "TERMINATE" not in line])
 
-    cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+    cost = chat_result.cost['usage_excluding_cached_inference']['total_cost']
     return refined_message.strip(), cost
+
+
+def clean_message(message: str) -> str:
+    """
+    Check if the message is returned as a block
+    If it is, remove the first and last lines
+    """
+    if message.startswith("```"):
+        message = message.split("\n")[1:-1]
+        message = "\n".join(message)
+    return message
 
 
 def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
@@ -169,12 +180,15 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     print(f"Detected message: {message}")
 
     # Get cost from the initial analysis
-    initial_cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+    initial_cost = chat_result.cost['usage_excluding_cached_inference']['total_cost']
 
     # Refine the commit message if seed text is provided
     if seed_text:
         refined_message, refinement_cost = refine_commit_message(
             message, seed_text)
+        refined_message = clean_message(refined_message)
         return files, refined_message, initial_cost + refinement_cost
+
+    message = clean_message(message)
 
     return files, message, initial_cost
