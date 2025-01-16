@@ -98,6 +98,17 @@ def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[
     return refined_message.strip(), cost
 
 
+def clean_message(message: str) -> str:
+    """
+    Check if the message is returned as a block
+    If it is, remove the first and last lines
+    """
+    if message.startswith("```"):
+        message = message.split("\n")[1:-1]
+        message = "\n".join(message)
+    return message
+
+
 def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
@@ -175,6 +186,9 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     if seed_text:
         refined_message, refinement_cost = refine_commit_message(
             message, seed_text)
+        refined_message = clean_message(refined_message)
         return files, refined_message, initial_cost + refinement_cost
+
+    message = clean_message(message)
 
     return files, message, initial_cost
