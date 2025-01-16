@@ -46,24 +46,26 @@ user_proxy = autogen.UserProxyAgent(
 )
 
 
-def analyze_changes() -> Tuple[List[str], str, float]:
+def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
+    Args:
+        seed_text: Optional text to guide commit message generation
     Returns:
-        Tuple containing (list of files to commit, suggested commit message)
+        Tuple containing (list of files to commit, suggested commit message, operation cost)
     """
     diff_output = get_diff()
 
     # Initialize the conversation
-    chat_result = user_proxy.initiate_chat(
-        assistant,
-        message=f"""Please analyze this git diff and suggest:
+    prompt = f"""Please analyze this git diff and suggest:
         1. Which files should be included in the commit
         2. A clear commit message following conventional commit format
         3. For larger commits, include details about the changes made as bullet points
 
         Git diff:
         {diff_output}
+        
+        {"Consider this seed text for the commit message: " + seed_text if seed_text else ""}
 
         Format your response as:
         FILES:

@@ -27,6 +27,8 @@ def main():
                         help='Automatically confirm commit without prompting')
     parser.add_argument('-p', '--push', action='store_true',
                         help='Automatically push changes after commit')
+    parser.add_argument('-m', '--message', type=str,
+                        help='Seed text to guide commit message generation')
     args = parser.parse_args()
 
     try:
@@ -46,7 +48,7 @@ def main():
             return 1
 
         # Get suggestions from the agent
-        files, message, cost = analyze_changes()
+        files, message, cost = analyze_changes(seed_text=args.message)
 
         if not files:
             print("No files to commit")
