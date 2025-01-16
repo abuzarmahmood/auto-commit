@@ -94,7 +94,7 @@ def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[
     refined_message = "\n".join(
         [line for line in content.split("\n") if "TERMINATE" not in line])
 
-    cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+    cost = chat_result.cost['usage_excluding_cached_inference']['total_cost']
     return refined_message.strip(), cost
 
 
@@ -180,7 +180,7 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     print(f"Detected message: {message}")
 
     # Get cost from the initial analysis
-    initial_cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+    initial_cost = chat_result.cost['usage_excluding_cached_inference']['total_cost']
 
     # Refine the commit message if seed text is provided
     if seed_text:
