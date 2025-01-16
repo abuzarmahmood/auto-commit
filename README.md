@@ -78,8 +78,10 @@ python src/main.py [options]
 
 ### Command Line Options
 
+- `-d, --directory`: Path to git repository (defaults to current directory)
 - `-y, --yes`: Automatically confirm commit without prompting
 - `-p, --push`: Automatically push changes after commit
+- `-m, --message`: Seed text to guide commit message generation
 
 Examples:
 ```bash
@@ -91,6 +93,12 @@ python src/main.py -y
 
 # Auto-commit and push
 python src/main.py -y -p
+
+# Specify working directory
+python src/main.py -d /path/to/repo
+
+# Provide seed text for commit message
+python src/main.py -m "Update user authentication"
 ```
 
 ## 🎬 Example Workflow

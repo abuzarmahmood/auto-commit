@@ -27,6 +27,8 @@ def main():
                         help='Automatically confirm commit without prompting')
     parser.add_argument('-p', '--push', action='store_true',
                         help='Automatically push changes after commit')
+    parser.add_argument('-m', '--message', type=str,
+                        help='Seed text to guide commit message generation')
     args = parser.parse_args()
 
     try:
@@ -46,18 +48,19 @@ def main():
             return 1
 
         # Get suggestions from the agent
-        files, message, cost = analyze_changes()
+        files, message, cost = analyze_changes(seed_text=args.message)
 
         if not files:
             print("No files to commit")
             return 1
 
-        # Show suggestions to user
+        # Show suggestions and cost to user
         print("\nSuggested files to commit:")
         for file in files:
             print(f"- {file}")
 
         print(f"\nSuggested commit message:\n{message}")
+        print(f"\nOperation cost: ${cost:.4f}")
 
         # Handle commit confirmation
         if not args.yes:
@@ -81,8 +84,6 @@ def main():
                 push_changes()
                 print("Changes pushed successfully!")
 
-        # Print operation cost
-        print(f"\nOperation cost: ${cost:.4f}")
         return 0
 
     except Exception as e:
