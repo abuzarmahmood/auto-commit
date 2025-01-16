@@ -57,7 +57,9 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     diff_output = get_diff()
 
     # Initialize the conversation
-    prompt = f"""Please analyze this git diff and suggest:
+    chat_result = user_proxy.initiate_chat(
+        assistant,
+        message=f"""Please analyze this git diff and suggest:
         1. Which files should be included in the commit
         2. A clear commit message following conventional commit format
         3. For larger commits, include details about the changes made as bullet points
