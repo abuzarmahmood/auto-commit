@@ -45,7 +45,9 @@ refiner = autogen.AssistantAgent(
     2. Optional seed text from the user
 
     Your job is to enhance the commit message while maintaining conventional commit format.
-    Incorporate relevant context from the seed text while keeping the message clear and concise."""
+    Incorporate relevant context from the seed text while keeping the message clear and concise.
+    Make sure the commit message is always in plain text.
+    """
 )
 
 user_proxy = autogen.UserProxyAgent(
