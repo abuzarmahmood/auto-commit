@@ -22,7 +22,7 @@ config_list = [
     }
 ]
 
-# Create assistant agent without Docker
+# Create agents
 assistant = autogen.AssistantAgent(
     name="git_assistant",
     llm_config={
@@ -35,7 +35,19 @@ assistant = autogen.AssistantAgent(
     Focus on creating clear, concise commit messages that explain the purpose of the changes."""
 )
 
-# Create user proxy agent
+refiner = autogen.AssistantAgent(
+    name="commit_refiner",
+    llm_config={
+        "config_list": config_list,
+    },
+    system_message="""You are a commit message refiner that takes:
+    1. An initial commit message
+    2. Optional seed text from the user
+    
+    Your job is to enhance the commit message while maintaining conventional commit format.
+    Incorporate relevant context from the seed text while keeping the message clear and concise."""
+)
+
 user_proxy = autogen.UserProxyAgent(
     name="user_proxy",
     human_input_mode="NEVER",
@@ -46,17 +58,54 @@ user_proxy = autogen.UserProxyAgent(
 )
 
 
+def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[str, float]:
+    """
+    Refine the commit message using the refiner agent
+    Args:
+        initial_message: Initial commit message to refine
+        seed_text: Optional seed text to guide refinement
+    Returns:
+        Tuple containing (refined commit message, operation cost)
+    """
+    # Initialize refinement conversation
+    chat_result = user_proxy.initiate_chat(
+        refiner,
+        message=f"""Please refine this commit message:
+
+        {initial_message}
+        
+        {"Consider this additional context: " + seed_text if seed_text else ""}
+
+        Keep the conventional commit format and ensure the message is clear and concise.
+        
+        TERMINATE"""
+    )
+
+    # Extract refined message
+    last_message = refiner.last_message()
+    if not last_message:
+        return initial_message, 0
+
+    content = last_message.get("content", "")
+    
+    # Remove any lines with "TERMINATE"
+    refined_message = "\n".join(
+        [line for line in content.split("\n") if "TERMINATE" not in line])
+
+    cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+    return refined_message.strip(), cost
+
 def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
     Args:
         seed_text: Optional text to guide commit message generation
     Returns:
-        Tuple containing (list of files to commit, suggested commit message, operation cost)
+        Tuple containing (list of files to commit, suggested commit message, total operation cost)
     """
     diff_output = get_diff()
 
-    # Initialize the conversation
+    # Initialize the initial analysis conversation
     chat_result = user_proxy.initiate_chat(
         assistant,
         message=f"""Please analyze this git diff and suggest:
@@ -116,6 +165,12 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     # Print detected message
     print(f"Detected message: {message}")
 
-    # Get cost from the last conversation
-    cost = chat_result.cost['usage_including_cached_inference']['total_cost']
-    return files, message, cost
+    # Get cost from the initial analysis
+    initial_cost = chat_result.cost['usage_including_cached_inference']['total_cost']
+
+    # Refine the commit message if seed text is provided
+    if seed_text:
+        refined_message, refinement_cost = refine_commit_message(message, seed_text)
+        return files, refined_message, initial_cost + refinement_cost
+    
+    return files, message, initial_cost
