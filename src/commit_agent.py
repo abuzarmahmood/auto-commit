@@ -43,7 +43,7 @@ refiner = autogen.AssistantAgent(
     system_message="""You are a commit message refiner that takes:
     1. An initial commit message
     2. Optional seed text from the user
-    
+
     Your job is to enhance the commit message while maintaining conventional commit format.
     Incorporate relevant context from the seed text while keeping the message clear and concise."""
 )
@@ -73,11 +73,11 @@ def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[
         message=f"""Please refine this commit message:
 
         {initial_message}
-        
+
         {"Consider this additional context: " + seed_text if seed_text else ""}
 
         Keep the conventional commit format and ensure the message is clear and concise.
-        
+
         TERMINATE"""
     )
 
@@ -87,13 +87,14 @@ def refine_commit_message(initial_message: str, seed_text: str = None) -> Tuple[
         return initial_message, 0
 
     content = last_message.get("content", "")
-    
+
     # Remove any lines with "TERMINATE"
     refined_message = "\n".join(
         [line for line in content.split("\n") if "TERMINATE" not in line])
 
     cost = chat_result.cost['usage_including_cached_inference']['total_cost']
     return refined_message.strip(), cost
+
 
 def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
     """
@@ -115,7 +116,7 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
 
         Git diff:
         {diff_output}
-        
+
         {"Consider this seed text for the commit message: " + seed_text if seed_text else ""}
 
         Format your response as:
@@ -170,7 +171,8 @@ def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
 
     # Refine the commit message if seed text is provided
     if seed_text:
-        refined_message, refinement_cost = refine_commit_message(message, seed_text)
+        refined_message, refinement_cost = refine_commit_message(
+            message, seed_text)
         return files, refined_message, initial_cost + refinement_cost
-    
+
     return files, message, initial_cost
