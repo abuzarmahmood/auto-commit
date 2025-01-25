@@ -17,8 +17,9 @@ api_key = os.getenv("OPENAI_API_KEY")
 # Configure the agent
 config_list = [
     {
-        "model": "gpt-4o",
-        "api_key": api_key  # Should be configured via environment variable
+        "model": "deepseek-r1:14b",
+        "base_url": "http://127.0.0.1:11434/v1",
+        "api_key": "ollama"  # Should be configured via environment variable
     }
 ]
 
