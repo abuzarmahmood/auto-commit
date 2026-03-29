@@ -29,6 +29,8 @@ def main():
                         help='Automatically push changes after commit')
     parser.add_argument('-m', '--message', type=str,
                         help='Seed text to guide commit message generation')
+    parser.add_argument('--no-diff', action='store_true',
+                        help='Only use file names, not full diff content')
     args = parser.parse_args()
 
     try:
@@ -48,7 +50,7 @@ def main():
             return 1
 
         # Get suggestions from the agent
-        files, message, cost = analyze_changes(seed_text=args.message)
+        files, message, cost = analyze_changes(seed_text=args.message, use_diff=not args.no_diff)
 
         if not files:
             print("No files to commit")

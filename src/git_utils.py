@@ -29,6 +29,14 @@ def get_staged_files() -> List[str]:
     return [item.a_path for item in repo.index.diff("HEAD")] + [item.a_path for item in repo.index.diff(None)]
 
 
+def get_changed_files() -> List[str]:
+    """Get list of files with staged changes (names only)"""
+    repo = get_repo()
+    # Get files from staged changes
+    staged = [item.a_path for item in repo.index.diff("HEAD")]
+    return list(set(staged))  # Remove duplicates
+
+
 def get_diff() -> str:
     """Get git diff output for staged changes"""
     repo = get_repo()

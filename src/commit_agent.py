@@ -109,26 +109,32 @@ def clean_message(message: str) -> str:
     return message
 
 
-def analyze_changes(seed_text: str = None) -> Tuple[List[str], str, float]:
+def analyze_changes(seed_text: str = None, use_diff: bool = True) -> Tuple[List[str], str, float]:
     """
     Analyze git diff and return suggested files and commit message
     Args:
         seed_text: Optional text to guide commit message generation
+        use_diff: If True, use full diff; if False, only use file names
     Returns:
         Tuple containing (list of files to commit, suggested commit message, total operation cost)
     """
-    diff_output = get_diff()
+    if use_diff:
+        diff_output = get_diff()
+        change_info = f"Git diff:\n{diff_output}"
+    else:
+        from git_utils import get_changed_files
+        changed_files = get_changed_files()
+        change_info = f"Changed files:\n" + "\n".join([f"- {f}" for f in changed_files])
 
     # Initialize the initial analysis conversation
     chat_result = user_proxy.initiate_chat(
         assistant,
-        message=f"""Please analyze this git diff and suggest:
+        message=f"""Please analyze these git changes and suggest:
         1. Which files should be included in the commit
         2. A clear commit message following conventional commit format
         3. For larger commits, include details about the changes made as bullet points
 
-        Git diff:
-        {diff_output}
+        {change_info}
 
         {"Consider this seed text for the commit message: " + seed_text if seed_text else ""}
 
