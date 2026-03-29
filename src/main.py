@@ -29,7 +29,7 @@ def main():
                         help='Automatically push changes after commit')
     parser.add_argument('-m', '--message', type=str,
                         help='Seed text to guide commit message generation')
-    parser.add_argument('--no-diff', action='store_true',
+    parser.add_argument('-n', '--no-diff', action='store_true',
                         help='Only use file names, not full diff content')
     args = parser.parse_args()
 
