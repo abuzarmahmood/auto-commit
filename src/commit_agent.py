@@ -7,18 +7,28 @@ It handles the interaction with the AI model and parsing of its responses.
 """
 
 import os
+import json
 import autogen
 from typing import List, Tuple
 from git_utils import get_diff
 
-# Get API key from environment variable
-api_key = os.getenv("OPENAI_API_KEY")
+# Load configuration from config.json
+config_path = os.path.join(os.path.dirname(__file__), '..', 'config.json')
+with open(config_path, 'r') as f:
+    config = json.load(f)
+
+# Get API key from environment variable specified in config
+api_key_env_var = config.get("api_key_env_var", "OPENAI_API_KEY")
+api_key = os.getenv(api_key_env_var)
+
+# Get model from config
+model = config.get("model", "gpt-4o")
 
 # Configure the agent
 config_list = [
     {
-        "model": "gpt-4o",
-        "api_key": api_key  # Should be configured via environment variable
+        "model": model,
+        "api_key": api_key
     }
 ]
 
