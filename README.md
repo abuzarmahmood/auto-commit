@@ -19,7 +19,7 @@ A smart utility that makes creating Git commits easier by automatically analyzin
 
 - Python 3.6 or higher
 - Git
-- OpenAI API key
+- OpenAI API key (or compatible API key for other providers)
 
 ### Installation
 
@@ -45,7 +45,19 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Set up your OpenAI API key:
+4. Configure the application by creating a `config.json` file in the repository root:
+```json
+{
+  "model": "gpt-4",
+  "api_key_env_var": "OPENAI_API_KEY"
+}
+```
+
+Available configuration options:
+- `model`: The AI model to use (e.g., "gpt-4", "gpt-4o", "gpt-3.5-turbo")
+- `api_key_env_var`: Name of the environment variable containing your API key
+
+5. Set up your API key as an environment variable:
 ```bash
 # On Linux/Mac:
 export OPENAI_API_KEY='your-api-key-here'
@@ -57,7 +69,9 @@ export OPENAI_API_KEY='your-api-key-here'
 set OPENAI_API_KEY=your-api-key-here
 ```
 
-5. Set up the bash function for easier access:
+Note: The environment variable name should match the `api_key_env_var` value in your `config.json`.
+
+6. Set up the bash function for easier access:
 ```bash
 # Source the bash function file:
 source src/autocommit.sh
@@ -133,11 +147,54 @@ Changes pushed successfully!
 Operation cost: $0.0023
 ```
 
+## ⚙️ Configuration
+
+The `config.json` file allows you to customize the behavior of auto-commit:
+
+```json
+{
+  "model": "gpt-4",
+  "api_key_env_var": "OPENAI_API_KEY"
+}
+```
+
+### Configuration Options
+
+- **model**: Specify which AI model to use for generating commit messages
+  - Examples: `"gpt-4"`, `"gpt-4o"`, `"gpt-3.5-turbo"`
+  - Default: `"gpt-4o"` if not specified
+
+- **api_key_env_var**: Name of the environment variable containing your API key
+  - This allows you to use different API providers or multiple API keys
+  - Default: `"OPENAI_API_KEY"` if not specified
+  - Example: Set to `"ANTHROPIC_API_KEY"` if using Claude models
+
+### Using Different Models or Providers
+
+To switch models, simply update the `config.json` file:
+
+```json
+{
+  "model": "gpt-3.5-turbo",
+  "api_key_env_var": "OPENAI_API_KEY"
+}
+```
+
+For different API providers (if supported by AutoGen), update both fields:
+
+```json
+{
+  "model": "claude-3-opus",
+  "api_key_env_var": "ANTHROPIC_API_KEY"
+}
+```
+
 ## 💡 Tips
 
 - The tool works best when changes are focused and related
 - You can always review and modify the suggested commit message
-- Make sure your OpenAI API key is properly set before running
+- Make sure your API key environment variable is properly set before running
+- Adjust the model in `config.json` to balance between cost and quality
 
 ## 🛠️ Development
 
